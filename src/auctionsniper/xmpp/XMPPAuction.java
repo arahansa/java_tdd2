@@ -18,8 +18,7 @@ public class XMPPAuction implements Auction {
 	public void bid(int amount) {
 		sendMessage(String.format(BID_COMMAND_FORMAT, amount));
 	}
-	@Override
-	public void join(){
+	public void join(int amount){
 		sendMessage(JOIN_COMMAND_FORMAT);
 	}
 	
@@ -31,5 +30,4 @@ public class XMPPAuction implements Auction {
 		}
 	}
 
-	
 }
