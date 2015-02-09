@@ -10,6 +10,7 @@ public class MainWindow extends JFrame{
 	private static final String MAIN_WINDOW_NAME = "Auction Sniper";
 	private static final String SNIPER_STATUS_NAME = "Joining";
 	private static final String STATUS_JOINING = "Joining";
+	public static final String STATUS_LOST = "Lost";
 	private final JLabel sniperstatus =  createLabel(STATUS_JOINING);
 	
 	public MainWindow() {
@@ -25,5 +26,8 @@ public class MainWindow extends JFrame{
 		result.setName(SNIPER_STATUS_NAME);
 		result.setBorder(new LineBorder(Color.black));
 		return result;
+	}
+	public void showStatus(String status) {
+		sniperstatus.setText(status);
 	}
 }
