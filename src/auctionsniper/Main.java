@@ -23,6 +23,8 @@ public class Main {
 	public static final String AUCTION_RESOURCE = "Auction";
 	public static final String ITEM_ID_AS_LOGIN ="auction-%s";
 	public static final String AUCTION_ID_FORMAT = ITEM_ID_AS_LOGIN + "@%s/"+ AUCTION_RESOURCE;
+	public static final String JOIN_COMMAND_FORMAT = "Join";
+	public static final String BID_COMMAND_FORMAT = "Bid";
 	
 	 
 	private MainWindow ui;
@@ -63,7 +65,7 @@ public class Main {
 			}
 		});
 		this.notTobeGcd = chat;
-		chat.sendMessage(new Message());
+		chat.sendMessage(JOIN_COMMAND_FORMAT);
 		
 	}
 
