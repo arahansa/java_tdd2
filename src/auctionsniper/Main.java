@@ -2,19 +2,16 @@ package auctionsniper;
 
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.lang.reflect.InvocationTargetException;
 
 import javax.swing.SwingUtilities;
 
 import org.jivesoftware.smack.Chat;
-import org.jivesoftware.smack.MessageListener;
 import org.jivesoftware.smack.XMPPConnection;
 import org.jivesoftware.smack.XMPPException;
-import org.jivesoftware.smack.packet.Message;
 
 import auctionsniper.ui.MainWindow;
 
-public class Main {
+public class Main implements AuctionEventListener {
 	public static final String SNIPER_STATUS_NAME = "Joining";
 	public static final String MAIN_WINDOW_NAME = "Auction Sniper";
 	private static final int ARG_HOSTNAME = 0;
@@ -54,23 +51,10 @@ public class Main {
 	}
 	private void joinAuction(XMPPConnection connection, String itemId) throws XMPPException{
 		disconnectWhenUICloses(connection);
-		final Chat chat = connection.getChatManager().createChat(auctionId(itemId, connection), 
-				new MessageListener() {
-			@Override
-			public void processMessage(Chat aChat, Message message) {
-				SwingUtilities.invokeLater(new Runnable() {
-					
-					@Override
-					public void run() {
-						ui.showStatus(MainWindow.STATUS_LOST);
-						
-					}
-				});
-			}
-		});
+		Chat chat = connection.getChatManager().createChat(auctionId(itemId, connection), 
+				new AuctionMessageTranslator(this));
 		this.notTobeGcd = chat;
 		chat.sendMessage(JOIN_COMMAND_FORMAT);
-		
 	}
 
 	private void disconnectWhenUICloses(final XMPPConnection connection) {
@@ -91,6 +75,23 @@ public class Main {
 
 	private static String auctionId(String itemId, XMPPConnection connection){
 		return String.format(AUCTION_ID_FORMAT, itemId, connection.getServiceName());
+	}
+
+	@Override
+	public void auctionClosed() {
+		SwingUtilities.invokeLater(new Runnable() {	
+			@Override
+			public void run() {
+				ui.showStatus(MainWindow.STATUS_LOST);	
+			}
+		});
+		
+	}
+
+	@Override
+	public void currentPrice(int price, int increment) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }
