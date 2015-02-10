@@ -54,11 +54,23 @@ public class AuctionSniperTest {
 		context.checking(new Expectations(){{
 			ignoring(auction);
 			allowing(sniperListener).sniperBidding();
-			then(sniperState.is("Bidding"));
+				then(sniperState.is("Bidding"));
 			atLeast(1).of(sniperListener).sniperLost();
-			when(sniperState.is("Bidding"));
+				when(sniperState.is("Bidding"));
 		}});
 		sniper.currentPrice(123, 45, PriceSource.FromOtherBidder);
+		sniper.auctionClosed();
+	}
+	
+	@Test public void reportsWonIfAuctionClosesWhenWinning(){
+		context.checking(new Expectations(){{
+			ignoring(auction);
+			allowing(sniperListener).sniperWinning();
+				then(sniperState.is("Widding"));
+			atLeast(1).of(sniperListener).sniperWon();
+				when(sniperState.is("Widding"));
+		}});
+		sniper.currentPrice(123, 45, PriceSource.FromSniper);
 		sniper.auctionClosed();
 	}
 }
