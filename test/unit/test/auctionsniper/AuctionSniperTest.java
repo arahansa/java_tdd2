@@ -15,7 +15,7 @@ import auctionsniper.SniperState;
 
 @RunWith(JMock.class)
 public class AuctionSniperTest {
-	protected static final String ITEM_ID = null;
+	protected static final String ITEM_ID = "item-54321";
 	private final Mockery context = new Mockery();
 	private final SniperListener sniperListener = context.mock(SniperListener.class);
 	private final Auction auction = context.mock(Auction.class);
