@@ -1,6 +1,9 @@
 package auctionsniper;
 
 public class AuctionSniper implements AuctionEventListener {
+	private static final String ITEM_ID = "item-54321";
+
+
 	private boolean isWinning = false;
 	
 	
@@ -27,8 +30,9 @@ public class AuctionSniper implements AuctionEventListener {
 		if(isWinning){
 			sniperListener.sniperWinning();
 		}else{
-			auction.bid(price + increment);
-			sniperListener.sniperBidding();
+			int bid = price + increment;
+			auction.bid(bid);
+			sniperListener.sniperBidding(new SniperState(ITEM_ID, price, bid));
 		}
 	}
 
