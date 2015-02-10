@@ -17,11 +17,9 @@ public class AuctionMessageTranslator implements MessageListener{
 	public void processMessage(Chat chat, Message message) {
 		AuctionEvent event = AuctionEvent.from(message.getBody());
 		String eventType = event.type();
-		System.out.println("현재 이벤트는 :"+eventType);
 		if("CLOSE".equals(eventType)){
 			listener.auctionClosed();
 		}else if("PRICE".equals(eventType)){
-			System.out.println("프라이스처리했습니당;^^");
 			listener.currentPrice(event.currentPrice(), event.increment());
 		}
 	}
