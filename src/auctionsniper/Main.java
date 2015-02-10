@@ -59,6 +59,7 @@ public class Main{
 		Auction auction = new XMPPAuction(chat); 
 		chat.addMessageListener(
 				new AuctionMessageTranslator(
+				connection.getUser(),
 				new AuctionSniper(auction, new SniperStateDisplayer())));
 		auction.join();
 	}
@@ -103,6 +104,12 @@ public class Main{
 					ui.showStatus(status);	
 				}
 			});
+		}
+
+		@Override
+		public void sniperWinning() {
+			showStatus(MainWindow.STATUS_WINNING);	
+			
 		}
 	}
 	
